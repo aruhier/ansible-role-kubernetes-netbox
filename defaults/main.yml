@@ -1,0 +1,59 @@
+---
+
+kubernetes_netbox_image: "ninech/netbox:v2.2.4"
+kubernetes_netbox_nginx_image: "nginx:1.13.6-alpine"
+
+kubernetes_netbox_namespace: "default"
+kubernetes_netbox_deployment: "netbox-deployment"
+kubernetes_netbox_app: "netbox"
+kubernetes_netbox_configmap: "netbox"
+kubernetes_netbox_secret: "netbox"
+kubernetes_netbox_service: "netbox"
+
+kubernetes_netbox_node_selector: {}
+kubernetes_netbox_replicas: 1
+kubernetes_netbox_revision_history: 1
+
+kubernetes_netbox_resources:
+  limits:
+    memory: "512Mi"
+  requests:
+    memory: "128Mi"
+
+kubernetes_netbox_nginx_resources:
+  limits:
+    memory: "256Mi"
+  requests:
+    memory: "64Mi"
+
+kubernetes_netbox_setup_ingress: false
+kubernetes_netbox_ingress:
+  name: "netbox-ingress"
+  host: "netbox.example.com"
+  annotations:
+  tls:
+
+kubernetes_netbox_secret_key: ""
+kubernetes_netbox_db:
+  host: "db.example.com"
+  port:
+  name: "netbox"
+  password: "netbox"
+  user: "netbox"
+
+kubernetes_netbox_email_from: "netbox@example.com"
+kubernetes_netbox_email_server: "mail.example.com"
+kubernetes_netbox_email_password: "netbox"
+kubernetes_netbox_email_user: "netbox"
+kubernetes_netbox_email_port: 25
+kubernetes_netbox_email_timeout: 10
+
+kubernetes_netbox_login_required: true
+kubernetes_netbox_su_email: "su@example.com"
+kubernetes_netbox_su_name: "superuser"
+kubernetes_netbox_su_password: "superuser"
+
+kubernetes_netbox_napalm_user: ""
+kubernetes_netbox_napalm_password: ""
+
+# vim: set ts=2 sw=2:
