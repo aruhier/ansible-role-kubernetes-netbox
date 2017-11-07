@@ -2,6 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: {{ kubernetes_netbox_service }}
+  namespace: {{ kubernetes_netbox_namespace }}
 spec:
   selector:
     app: {{ kubernetes_netbox_app }}

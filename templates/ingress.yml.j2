@@ -2,6 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: {{ kubernetes_netbox_ingress.name }}
+  namespace: {{ kubernetes_netbox_namespace }}
 {% if kubernetes_netbox_ingress.annotations %}
   annotations:
     {{ kubernetes_netbox_ingress.annotations | to_nice_yaml | indent }}
