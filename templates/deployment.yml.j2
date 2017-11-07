@@ -5,6 +5,13 @@ metadata:
   namespace: {{ kubernetes_netbox_namespace }}
   labels:
     app: {{ kubernetes_netbox_app }}
+{% if kubernetes_netbox_deployment_labels %}
+    {{ kubernetes_netbox_deployment_labels | to_nice_yaml | indent(4) }}
+{% endif %}
+{% if kubernetes_netbox_deployment_annotations %}
+  annotations:
+    {{ kubernetes_netbox_deployment_annotations | to_nice_yaml | indent(4) }}
+{% endif %}
 spec:
   replicas: {{ kubernetes_netbox_replicas }}
   revisionHistoryLimit: {{ kubernetes_netbox_revision_history }}

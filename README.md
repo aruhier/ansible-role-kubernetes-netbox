@@ -27,6 +27,11 @@ kubernetes_netbox_revision_history: 1
 # Node selector
 kubernetes_netbox_node_selector: {}
 
+# Add custom labels in the deployment metadata section
+kubernetes_netbox_deployment_labels: {}
+# Add custom annotations in the deployment metadata section
+kubernetes_netbox_deployment_annotations: {}
+
 kubernetes_netbox_resources:
   limits:
     memory: "512Mi"
