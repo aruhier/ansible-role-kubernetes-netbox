@@ -30,7 +30,20 @@ spec:
         resources:
           {{ kubernetes_netbox_resources | to_yaml | indent(10) }}
         ports:
-        - containerPort: 80
+        - name: http
+          containerPort: 80
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 15
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 90
+          periodSeconds: 10
         env:
         - name: ALLOWED_HOSTS
           value: "*"
