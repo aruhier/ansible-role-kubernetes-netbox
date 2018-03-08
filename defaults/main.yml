@@ -1,6 +1,6 @@
 ---
 
-kubernetes_netbox_image: "ninech/netbox:v2.3.0"
+kubernetes_netbox_image: "ninech/netbox:v2.3.1"
 kubernetes_netbox_nginx_image: "nginx:1.13.9-alpine"
 
 kubernetes_netbox_namespace: "default"
