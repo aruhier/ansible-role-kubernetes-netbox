@@ -1,7 +1,7 @@
 ---
 
-kubernetes_netbox_image: "ninech/netbox:v2.5.2"
-kubernetes_netbox_nginx_image: "nginx:1.14.2-alpine"
+kubernetes_netbox_image: "netboxcommunity/netbox:v2.5.12"
+kubernetes_netbox_nginx_image: "nginx:1.16.0-alpine"
 
 kubernetes_netbox_namespace: "default"
 kubernetes_netbox_deployment: "netbox-deployment"
