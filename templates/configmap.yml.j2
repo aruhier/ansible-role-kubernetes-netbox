@@ -4,6 +4,7 @@ metadata:
   name: {{ kubernetes_netbox_configmap }}
   namespace: {{ kubernetes_netbox_namespace }}
 data:
+  cors_origin_whitelist: "{{ kubernetes_netbox_cors_origin_whitelist }}"
   db.host: "{{ kubernetes_netbox_db.host }}"
   db.port: "{{ kubernetes_netbox_db.port | default('') }}"
   db.name: "{{ kubernetes_netbox_db.name }}"

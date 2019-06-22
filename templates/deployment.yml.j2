@@ -47,6 +47,11 @@ spec:
         env:
         - name: ALLOWED_HOSTS
           value: "*"
+        - name: CORS_ORIGIN_WHITELIST
+          valueFrom:
+            configMapKeyRef:
+              name: {{ kubernetes_netbox_configmap }}
+              key: cors_origin_whitelist
         - name: DB_HOST
           valueFrom:
             configMapKeyRef:

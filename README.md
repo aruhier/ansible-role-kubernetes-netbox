@@ -57,6 +57,11 @@ kubernetes_netbox_ingress:
 # Netbox secret key. CHANGE IT
 kubernetes_netbox_secret_key: ""
 
+# CORS origin whitelist, space separated. MANDATORY
+kubernetes_netbox_cors_origin_whitelist:
+# example:
+# kubernetes_netbox_cors_origin_whitelist: "https://example.com http://example.net"
+
 # Netbox database
 kubernetes_netbox_db:
   host: "db.example.com"
@@ -97,6 +102,8 @@ Example Playbook
   run_once: true
   vars:
     kubernetes_netbox_secret_key: "a_not_so_random_secret_key"
+
+    kubernetes_netbox_cors_origin_whitelist: ["example.com"]
 
     kubernetes_netbox_db:
       host: "db.example.com"
