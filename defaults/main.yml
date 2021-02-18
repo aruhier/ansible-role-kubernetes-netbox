@@ -1,6 +1,6 @@
 ---
 
-kubernetes_netbox_image: "netboxcommunity/netbox:v2.8.3"
+kubernetes_netbox_image: "netboxcommunity/netbox:v2.10.4"
 kubernetes_netbox_nginx_image: "nginx:1.18.0-alpine"
 
 kubernetes_netbox_namespace: "default"
