@@ -1,7 +1,8 @@
 ---
 
-kubernetes_netbox_image: "netboxcommunity/netbox:v2.10.6"
-kubernetes_netbox_nginx_image: "nginx:1.18.0-alpine"
+kubernetes_netbox_image: "netboxcommunity/netbox:v3.0.0"
+kubernetes_netbox_nginx_image: "nginx:1.20.1-alpine"
+kubernetes_netbox_redis_image: "redis:6.2.5-alpine"
 
 kubernetes_netbox_namespace: "default"
 kubernetes_netbox_deployment: "netbox-deployment"
@@ -24,6 +25,12 @@ kubernetes_netbox_resources:
     memory: "128Mi"
 
 kubernetes_netbox_nginx_resources:
+  limits:
+    memory: "256Mi"
+  requests:
+    memory: "64Mi"
+
+kubernetes_netbox_redis_resources:
   limits:
     memory: "256Mi"
   requests:

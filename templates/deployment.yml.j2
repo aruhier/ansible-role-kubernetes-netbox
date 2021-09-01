@@ -252,6 +252,11 @@ spec:
         volumeMounts:
         - mountPath: /opt/netbox/netbox/static
           name: netbox-static-files
+      - image: {{ kubernetes_netbox_redis_image }}
+        imagePullPolicy: Always
+        name: redis
+        resources:
+          {{ kubernetes_netbox_redis_resources | to_yaml | indent(10) }}
       - image: {{ kubernetes_netbox_nginx_image }}
         imagePullPolicy: Always
         name: nginx
