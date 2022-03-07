@@ -20,9 +20,9 @@ kubernetes_netbox_deployment_annotations: {}
 
 kubernetes_netbox_resources:
   limits:
-    memory: "512Mi"
+    memory: "1Gi"
   requests:
-    memory: "128Mi"
+    memory: "256Mi"
 
 kubernetes_netbox_nginx_resources:
   limits:
@@ -32,7 +32,7 @@ kubernetes_netbox_nginx_resources:
 
 kubernetes_netbox_redis_resources:
   limits:
-    memory: "256Mi"
+    memory: "512Mi"
   requests:
     memory: "64Mi"
 
