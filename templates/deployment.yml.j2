@@ -23,114 +23,6 @@ spec:
       labels:
         app: {{ kubernetes_netbox_app }}
     spec:
-      initContainers:
-      - image: {{ kubernetes_netbox_image }}
-        name: init-netbox
-        imagePullPolicy: Always
-        command: ['/opt/netbox/venv/bin/python3', '/opt/netbox/netbox/manage.py', 'collectstatic']
-        resources:
-          {{ kubernetes_netbox_resources | to_yaml | indent(10) }}
-        volumeMounts:
-        - mountPath: /opt/netbox/netbox/static
-          name: netbox-static-files
-        env:
-        - name: ALLOWED_HOSTS
-          value: "*"
-        - name: CORS_ORIGIN_WHITELIST
-          valueFrom:
-            configMapKeyRef:
-              name: {{ kubernetes_netbox_configmap }}
-              key: cors_origin_whitelist
-        - name: DB_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: {{ kubernetes_netbox_configmap }}
-              key: db.host
-        - name: DB_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: {{ kubernetes_netbox_configmap }}
-              key: db.port
-        - name: DB_NAME
-          valueFrom:
-            configMapKeyRef:
-              name: {{ kubernetes_netbox_configmap }}
-              key: db.name
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{ kubernetes_netbox_secret }}
-              key: db.password
-        - name: DB_USER
-          valueFrom:
-            secretKeyRef:
-              name: {{ kubernetes_netbox_secret }}
-              key: db.user
-        - name: EMAIL_FROM
-          valueFrom:
-            configMapKeyRef:
-              name: {{ kubernetes_netbox_configmap }}
-              key: email.from
-        - name: EMAIL_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{ kubernetes_netbox_secret }}
-              key: email.password
-        - name: EMAIL_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: {{ kubernetes_netbox_secret }}
-              key: email.user
-        - name: EMAIL_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: {{ kubernetes_netbox_configmap }}
-              key: email.port
-        - name: EMAIL_SERVER
-          valueFrom:
-            configMapKeyRef:
-              name: {{ kubernetes_netbox_configmap }}
-              key: email.server
-        - name: EMAIL_TIMEOUT
-          valueFrom:
-            configMapKeyRef:
-              name: {{ kubernetes_netbox_configmap }}
-              key: email.timeout
-        - name: LOGIN_REQUIRED
-          valueFrom:
-            configMapKeyRef:
-              name: {{ kubernetes_netbox_configmap }}
-              key: login_required
-        - name: NAPALM_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: {{ kubernetes_netbox_secret }}
-              key: napalm.user
-        - name: NAPALM_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{ kubernetes_netbox_secret }}
-              key: napalm.password
-        - name: SECRET_KEY
-          valueFrom:
-            secretKeyRef:
-              name: {{ kubernetes_netbox_secret }}
-              key: secret_key
-        - name: SUPERUSER_EMAIL
-          valueFrom:
-            secretKeyRef:
-              name: netbox
-              key: su.email
-        - name: SUPERUSER_NAME
-          valueFrom:
-            secretKeyRef:
-              name: {{ kubernetes_netbox_secret }}
-              key: su.user
-        - name: SUPERUSER_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{ kubernetes_netbox_secret }}
-              key: su.password
       containers:
       - image: {{ kubernetes_netbox_image }}
         name: netbox
@@ -138,16 +30,16 @@ spec:
           {{ kubernetes_netbox_resources | to_yaml | indent(10) }}
         ports:
         - name: http
-          containerPort: 80
+          containerPort: 8080
         readinessProbe:
           httpGet:
-            path: /
+            path: /login
             port: http
           initialDelaySeconds: 15
           periodSeconds: 10
         livenessProbe:
           httpGet:
-            path: /
+            path: /login
             port: http
           initialDelaySeconds: 90
           periodSeconds: 10
@@ -249,37 +141,14 @@ spec:
             secretKeyRef:
               name: {{ kubernetes_netbox_secret }}
               key: su.password
-        volumeMounts:
-        - mountPath: /opt/netbox/netbox/static
-          name: netbox-static-files
       - image: {{ kubernetes_netbox_redis_image }}
         imagePullPolicy: Always
         name: redis
         resources:
           {{ kubernetes_netbox_redis_resources | to_yaml | indent(10) }}
-      - image: {{ kubernetes_netbox_nginx_image }}
-        imagePullPolicy: Always
-        name: nginx
-        resources:
-          {{ kubernetes_netbox_nginx_resources | to_yaml | indent(10) }}
-        volumeMounts:
-        - mountPath: /opt/netbox/netbox/static
-          name: netbox-static-files
-        - mountPath: /etc/nginx/nginx.conf
-          name: netbox-config
-          subPath: nginx.conf
 {% if kubernetes_netbox_node_selector|default({}) %}
       nodeSelector:
         {{ kubernetes_netbox_node_selector | to_yaml | indent(8) }}
 {% endif %}
-      volumes:
-      - name: netbox-config
-        configMap:
-          name: {{ kubernetes_netbox_configmap }}
-          items:
-            - key: nginx.conf
-              path: nginx.conf
-      - name: netbox-static-files
-        emptyDir: {}
       restartPolicy: Always
 status: {}
